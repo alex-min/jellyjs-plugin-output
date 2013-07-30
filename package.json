@@ -1,0 +1,27 @@
+{
+  "name": "jellyjs-plugin-output",
+  "version": "0.0.8",
+  "description": "Jelly.js output Plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-min/jellyjs-plugin-output.git"
+  },
+  "keywords": [
+    "framework",
+    "web"
+  ],
+  "author": "alex-min",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "jellyjs": "0.x.x",
+    "chai": "~1.7.0",
+    "mocha": "~1.12.0",
+    "request": "~2.22.0"
+  }
+}
