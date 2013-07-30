@@ -17,6 +17,8 @@
   "author": "alex-min",
   "license": "MIT",
   "dependencies": {
+    "mkdirp": "~0.3.5",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "jellyjs-plugin-template": "0.x.x",
