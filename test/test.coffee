@@ -10,5 +10,21 @@ catch e
   jy = require("#{root}/index.js");
 
 describe('#Plugin::output', ->
-  
+  #---------------
+  it('Should work on File entities', (cb) ->
+    jelly = new jy.Jelly()
+    jelly.boot({
+      directory:"#{__dirname}/demo"
+      packagePlugins:['template']
+      folderPlugins:[{name:'output', directory:pluginDir}]
+      localRequire: (elm, cb) ->
+        try
+          cb(null, require.resolve(elm))  
+        catch e
+          cb(e)
+    }, (err) ->
+      
+      cb(err)
+    )
+  )  
 )

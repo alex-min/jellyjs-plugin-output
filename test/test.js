@@ -19,4 +19,30 @@ try {
   jy = require("" + root + "/index.js");
 }
 
-describe('#Plugin::output', function() {});
+describe('#Plugin::output', function() {
+  return it('Should work on File entities', function(cb) {
+    var jelly;
+
+    jelly = new jy.Jelly();
+    return jelly.boot({
+      directory: "" + __dirname + "/demo",
+      packagePlugins: ['template'],
+      folderPlugins: [
+        {
+          name: 'output',
+          directory: pluginDir
+        }
+      ],
+      localRequire: function(elm, cb) {
+        try {
+          return cb(null, require.resolve(elm));
+        } catch (_error) {
+          e = _error;
+          return cb(e);
+        }
+      }
+    }, function(err) {
+      return cb(err);
+    });
+  });
+});

@@ -19,6 +19,7 @@
   "dependencies": {
   },
   "devDependencies": {
+    "jellyjs-plugin-template": "0.x.x",
     "jellyjs": "0.x.x",
     "chai": "~1.7.0",
     "mocha": "~1.12.0",

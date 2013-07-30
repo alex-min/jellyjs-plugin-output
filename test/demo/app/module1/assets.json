@@ -1,0 +1,17 @@
+{
+  "fileList":[
+    {"name":"file1.tpl", "params":{}}
+  ],
+  "filePlugins": ["template", "output"],
+
+  "filePluginParameters" : {
+      "template":{"strip":true},
+      "output":{
+        "allowedExtensions":["js","tpl"],
+        "generateUniqueId":false,
+        "outputDirectoryList":[
+          "public/"
+        ]
+      }
+  }  
+}

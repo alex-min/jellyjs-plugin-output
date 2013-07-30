@@ -1,0 +1,9 @@
+{
+  "loadedModules": [
+      {"name":"module1","params":{}}
+  ],
+  "plugins":[
+  ],
+  "pluginParameters":{
+  }
+}
