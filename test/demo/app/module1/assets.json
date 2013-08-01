@@ -7,7 +7,10 @@
   "filePluginParameters" : {
       "template":{"strip":true},
       "output":{
-        "allowedExtensions":["js","tpl"],
+        "allowedInputExtensions":["js","tpl"],
+        "allowedGeneratedExtensions":["tpl"],
+        "useGeneratedExtensionsAsOutput":true,
+        "searchForLastGeneratedExtension":true,
         "generateUniqueId":false,
         "outputDirectoryList":[
           "public/"
