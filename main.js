@@ -70,12 +70,12 @@ getOutputFilenameFromFile = function(file, content, options, cb) {
 };
 
 outputFile = function(file, jelly, options, cb) {
-  var fileList, self;
+  var fileList, prevFileList, self;
 
   self = this;
   cb = cb || function() {};
   fileList = [];
-  this.getSharedObjectManager().registerObject('output', 'file-list', []);
+  prevFileList = this.getSharedObjectManager().getObject('output', 'file-list');
   return async.each(options.outputDirectoryList, function(dir, cb) {
     dir = "" + (jelly.getRootDirectory()) + "/" + dir;
     return mkdirIfNotExist(dir, function(err) {
@@ -100,13 +100,29 @@ outputFile = function(file, jelly, options, cb) {
           filename = getOutputFilenameFromFile(file, content, options);
           return cb();
         }, function(cb) {
-          return fs.writeFile("" + dir + "/" + filename, content.content.toString(), function(err) {
+          var endFilename;
+
+          endFilename = "" + dir + "/" + filename;
+          return fs.writeFile(endFilename, content.content.toString(), function(err) {
+            fileList.push({
+              absoluteFilename: endFilename,
+              filename: filename,
+              obj: file
+            });
             return cb(err);
           });
         }
       ], cb);
     });
-  }, cb);
+  }, function(err) {
+    if (err != null) {
+      cb(err);
+      cb = function() {};
+      return;
+    }
+    prevFileList.updateContent(fileList);
+    return cb();
+  });
 };
 
 /*
@@ -133,6 +149,7 @@ outputFile = function(file, jelly, options, cb) {
 
 module.exports = {
   load: function(cb) {
+    this.getSharedObjectManager().registerObject('output', 'file-list', []);
     return cb();
   },
   oncall: function(obj, params, cb) {

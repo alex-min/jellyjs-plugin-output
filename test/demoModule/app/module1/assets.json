@@ -1,0 +1,28 @@
+{
+  "fileList":[
+    {"name":"file1.tpl", "params":{}}
+  ],
+  "filePlugins": ["template", "output"],
+
+  "plugins":["output", "template"],
+
+  "pluginParameters": {
+    "output":{
+      
+    }
+  },
+
+  "filePluginParameters" : {
+      "template":{"strip":true},
+      "output":{
+        "allowedInputExtensions":["js","tpl"],
+        "allowedGeneratedExtensions":["tpl"],
+        "useGeneratedExtensionsAsOutput":true,
+        "searchForLastGeneratedExtension":true,
+        "generateUniqueId":false,
+        "outputDirectoryList":[
+          "public/"
+        ]
+      }
+  }  
+}

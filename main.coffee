@@ -45,9 +45,11 @@ getOutputFilenameFromFile = (file, content, options, cb) ->
 outputFile = (file, jelly, options, cb) ->
   self = @
   cb = cb || ->
+  # the fileList is storing all the files created with the plugin
+  # this is really usefull for updating scripts tags for example (or for accessing from another plugin)
   fileList = []
 
-  @getSharedObjectManager().registerObject('output', 'file-list', [])
+  prevFileList = @getSharedObjectManager().getObject('output','file-list')
   async.each(options.outputDirectoryList, (dir, cb) ->
     dir = "#{jelly.getRootDirectory()}/#{dir}"
     mkdirIfNotExist(dir, (err) ->
@@ -66,12 +68,20 @@ outputFile = (file, jelly, options, cb) ->
           filename = getOutputFilenameFromFile(file, content, options)
           cb()
         (cb) ->
-          fs.writeFile("#{dir}/#{filename}", content.content.toString(), (err) ->
+          endFilename = "#{dir}/#{filename}"
+          fs.writeFile(endFilename, content.content.toString(), (err) ->
+            fileList.push({absoluteFilename:endFilename, filename:filename, obj:file})
             cb(err)
           )
       ], cb)
     )
-  ,cb)
+  , (err) ->
+    if err?
+      cb(err); cb = ->
+      return
+    prevFileList.updateContent(fileList)
+    cb()
+  )
 
 
 ###
@@ -99,9 +109,9 @@ outputFile = (file, jelly, options, cb) ->
 
 module.exports = {
   load: (cb) ->
+    @getSharedObjectManager().registerObject('output', 'file-list', [])
     cb()
   oncall: (obj, params, cb) ->
-
     self = @
     params.pluginParameters ?= {}
     params.pluginParameters.output ?= {}
